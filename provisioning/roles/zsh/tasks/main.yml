@@ -1,0 +1,14 @@
+---
+- name: install zsh from repo
+  apt: name=zsh state=installed
+
+- name: copy config files in rc folder
+  copy: src=.zshrc dest={{ home }}/.zshrc
+
+- name: change login shell to zsh
+  user: name={{ username }} shell=/usr/bin/zsh
+
+- name: add autocompletion for symfony app/console
+  get_url:
+      url=https://raw.githubusercontent.com/jaytaph/SFConsole/master/console_completion.sh
+      dest={{ home }}/console_completion.sh
